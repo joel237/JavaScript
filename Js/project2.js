@@ -1,4 +1,3 @@
-window.onload=function () {
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
     const texture = new Image();
@@ -132,8 +131,14 @@ window.onload=function () {
                     this.dxLutin=0;
                 if(this.Vy>-15)
                     this.Vy -= 10;
+
                 break;
 
+            }
+            default:
+            {
+                console.log("cette cas n'existe pas ");
+                break;
             }
 
         }
@@ -218,6 +223,8 @@ window.onload=function () {
 
             this.dx=getRandomInt(width-80);
             this.dy=getRandomInt(height-95);
+            AjoutLutin(this);
+
         }
 
         draw() {
@@ -254,6 +261,45 @@ var sapin1=new Sapin();
     var sapin5=new Sapin();
     var lutins=new Lutin();
 
+    var listeDeLutins=[];
+   // listeDeLutins.push(lutins);
+    AjoutLutin(sapin1);
+
+
+    function AjoutLutin(sapin){
+        switch(sapin.statue)
+        {
+            case "decorer" :
+            {
+              listeDeLutins.push(new Lutin());
+                listeDeLutins.push(new Lutin());
+
+                break;
+
+
+            }
+            case "nonDecorer":
+            {
+
+                listeDeLutins.push(new Lutin());
+                break;
+            }
+            default:
+                break;
+
+        }
+    }
+
+    function ajouLutin() {
+        listeDeLutins.push(new Lutin());
+
+    }
+
+
+
+
+
+
 function testSapin(sapin) {
     switch (sapin.getStatue()) {
 
@@ -263,10 +309,7 @@ function testSapin(sapin) {
             {
                 sapin.setTemps(10);
             }
-            else if(sapin.getTemps()===10)
-            {
-                sapin.setTemps(20);
-            }else
+           else
             {
                 sapin.suprimer();
             }
@@ -275,19 +318,15 @@ function testSapin(sapin) {
         }
         case "decorer":
         {
-            if (sapin.getTemps()===0)
-            {
-                sapin.setTemps(10);
-            }else
-            {
                 sapin.suprimer();
-            }
 
             break;
         }
         default:
         {
             console.log("se sapin n'existe pas");
+
+
             break;
         }
 
@@ -299,10 +338,23 @@ function testSapin(sapin) {
         sapin2.afficher=true;
         testSapin(sapin1);
         testSapin(sapin2);
+       // if( !testSapin(sapin1))
+       /// if(!testSapin(sapin2))
         sapin1.draw();
         sapin2.draw();
+        dessineLutins();
 
 }
+
+    function dessineLutins()
+    {
+       // console.log("Nombre de lutin "+ listeDeLutins.length);
+        for (var i=0;listeDeLutins.length;i++)
+        {
+            listeDeLutins[i].drawLutin();
+        }
+
+    }
 
     function sound(src) {
         this.sound = document.createElement("audio");
@@ -345,8 +397,7 @@ function testSapin(sapin) {
                     {
                         this.intervalBetweenSantaY=debutPositionRightPressedY;
                         this.intervalBetweenSantaX=0;
-                    }
-                    else
+                    }else
                     {
                         this.intervalBetweenSantaX=this.intervalBetweenSantaX+72;
                     }
@@ -363,8 +414,7 @@ function testSapin(sapin) {
                     {
                         this.intervalBetweenSantaY=debutPositionLeftPressedY;
                         this.intervalBetweenSantaX=0;
-                    }
-                    else
+                    }                    else
                     {
                         this.intervalBetweenSantaX=this.intervalBetweenSantaX+72;
                     }
@@ -381,8 +431,7 @@ function testSapin(sapin) {
                     {
                         this.intervalBetweenSantaY=debutPositionDownPressed;
                         this.intervalBetweenSantaX=0;
-                    }
-                    else
+                    }                    else
                     {
                         this.intervalBetweenSantaX=this.intervalBetweenSantaX+72;
                     }
@@ -399,8 +448,7 @@ function testSapin(sapin) {
                     {
                         this.intervalBetweenSantaY=debutPositionUpPressed;
                         this.intervalBetweenSantaX=0;
-                    }
-                    else
+                    }                    else
                     {
                         this.intervalBetweenSantaX=this.intervalBetweenSantaX+72;
                     }
@@ -535,15 +583,28 @@ function testSapin(sapin) {
     }
 
     function draw() {
-        temps=temps+10; // le temps en milliseconds
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // je commence par effacer l'ecran
+        temps=temps+10; // le temps en milliseconds       ctx.clearRect(0, 0, canvas.width, canvas.height); // je commence par effacer l'ecran
+        if(temps===10000)
+        {
+            if(sapin1.getStatue()==="decorer")
+            {
+                AjoutLutin();
+            }
+            else{
+                AjoutLutin(sapin1);
+            }
+
+        }
+
+
         drawTexture();
         santa.draw();
         moveSanta();
         sapin1.draw();
         sapin2.draw();
         drawScore();
-        lutins.drawLutin();
+        dessineLutins();
+      //  lutins.drawLutin();
        // sapin1.draw();
      //   drawListeSapins();
     }
@@ -566,6 +627,8 @@ function testSapin(sapin) {
                     cadeaux=cadeaux-10;
                     break;
                 }
+                default:
+                    break;
 
             }
             sapin.suprimer();
@@ -602,16 +665,19 @@ function testSapin(sapin) {
         //collisionDetection();
 
     }
-    function marcheLutin()
+    function walkLutin()
     {
-        lutins.marche();
+        for (var i=0;listeDeLutins.length;i++)
+        {
+            listeDeLutins[i].marche();
+
+        }
     }
     setInterval(draw, 10);
    setInterval( drawListeSapins,10000);
-    setInterval( marcheLutin,300);
+    setInterval( walkLutin,300);
     // setTimeout(drawChangeObject, 10000);
 
 
 
 
-}
