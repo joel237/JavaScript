@@ -1,0 +1,73 @@
+Ici la possition des Santas
+Premier ligne: intervalBetweenSantaX varie entre 0 est 144 ne pas toucher au autre parametre pour faire varier le premier ligne par pas de 72
+Deuxieme ligne: varie par pas de 110 donc de 0 a  4*100 variable intervalBetweenSantaY l'estimation n'est pas tres claire mais bon on poura
+l'aduster atous moment
+
+
+  sapinPosition = [
+            [290, 211],
+            [354, 211],
+            [475, 204]
+        ];
+chaque fleche de la touche corespond a une ligne de Santa
+
+
+Position arbre non decoré
+    ctx.drawImage(tree,0,133, 96,125 ,100, 100, 96, 125);
+        ctx.drawImage(tree,0,386, 95,124 ,100, 100, 96, 125);
+        SAPIN
+            ctx.drawImage(tree,288,213, 68,77 ,100, 100, 96, 125);
+                ctx.drawImage(tree,416,191, 63,94 ,100, 100, 96, 125);
+    decore
+        ctx.drawImage(tree,96,133, 95,124 ,100, 100, 96, 125);
+            ctx.drawImage(tree,0,259, 95,127 ,100, 100, 96, 125);
+                ctx.drawImage(tree,96,259, 100,127 ,100, 100, 96, 125);
+
+     CHARIO PER NOEL
+
+ sapinPosition = [
+        [0, 133,96,125],
+        [0, 386,95,124]
+    ];
+ [288, 213,68,77],
+        [416, 191,63,94],[96,133,95,124],[0,259,95,127],[96,259,100,127]
+           marche(){
+            var choix=Math.trunc(Math.random()*4);
+            switch(choix){
+                case 0:
+                {this.dxLutin++;
+                    this.choix='à droite';
+                    break;
+                }
+                case 1:
+                {
+                    this.dxLutin--;
+                    this.choix='à gauche';
+                    break;
+                }
+                case 2:
+                {
+                    this.dyLutin++;
+                    this.choix='en haut';
+                    break;
+                }
+                case 3:
+                {
+                    this.dyLutin--;
+                    this.choix='en bas';
+                    break;
+
+                }
+
+            }
+
+
+        }
+
+
+        }
+
+
+
+        lutin position dwoun 0 avance par pas de 33
+        left
