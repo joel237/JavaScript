@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Projet jeu </title>
+    <link rel="stylesheet" type="text/css" href="css.css">
+</head>
+<body onload="prog();">
+
+
+
+<script src = "test.js" ></script>
+<script type="text/javascript">
+var i
+function prog()
+{
+  document.getElementById("d1").innerHTML=""; document.getElementById("d2").style.width=0; i=0;
+  progBar();
+}
+ 
+function progBar()
+{
+   if (i<=(300))
+   {
+        if (i>0){document.getElementById("d1").innerHTML=parseInt(i/3)+"%";}
+      document.getElementById("d2").style.width=i+"px";
+      var j=0;     
+      while (j<=100)
+        j++; 
+        setTimeout("progBar();", 45);
+        i++;  
+   }
+}
+</script>
+<div id="ex" style="position:relative;width:468px;background:#eeeeee;border:1px double #99f;">
+<center><br><br>
+<div id="empty" align="left">
+<div id="d2">
+<div id="d1">
+</div></div></div></center><br><br></div>
+</center>
+</body>
+</html>
