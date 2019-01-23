@@ -51,8 +51,14 @@ var vitesseLutins=10;
     function getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
     }
+
+
+
+
+
     class Lutin
     {
+
         constructor()
         {
             this.dxLutin=0;
@@ -148,7 +154,7 @@ var vitesseLutins=10;
         }
         drawLutin()
         {
-            ctx.drawImage(lutin,this.dxLutin,this.dyLutin, 33,31 ,this.Vx, this.Vy, 54, 84);
+            ctx.drawImage(lutin,this.dxLutin,this.dyLutin, 33,31 ,this.Vx, this.Vy, 44, 60);
         }
 
 
@@ -401,6 +407,8 @@ var vitesseLutins=10;
                         this.intervalBetweenSantaX=0;
                     if(this.dxSanta<width-50) // On enleve 50 pour que Santa ne disparesse pas completement sur le bord
                         this.dxSanta += 10;
+                    else
+                        this.dxSanta=2;
                     break;
                 }
                 case('left'):
@@ -418,6 +426,8 @@ var vitesseLutins=10;
                         this.intervalBetweenSantaX=0;
                     if(this.dxSanta>2) // nous allons l'aisser deux pixel pour que Santa apparesse complettement
                         this.dxSanta -= 10;
+                    else
+                        this.dxSanta=width-10;
                     break;
                 }
                 case('down'):
@@ -436,6 +446,8 @@ var vitesseLutins=10;
                         this.intervalBetweenSantaX=0;
                     if(this.dySanta<height-70) // meme chose on evite que Santa disparer du coup on enleve 60 de la hauteur
                         this.dySanta+=10;
+                    else
+                        this.dySanta=2;
                     break;
                 }
                 case('up'):
@@ -454,6 +466,8 @@ var vitesseLutins=10;
                         this.intervalBetweenSantaX=0;
                     if(this.dySanta>-15)
                         this.dySanta-=10;
+                    else
+                        this.dySanta=height+3;
                     break;
                 }
                 default:
@@ -699,6 +713,7 @@ function drawBoule1() {
 var tempsAttrapez=0;
 var s4= new sound("../Js/Emotisound-hoho.wav");
 var s5= new sound("../Js/Ho Ho Ho St Nick-SoundBible.com-1954250969.mp3");
+
     function draw() {
 
         if(RunJeux)
@@ -885,6 +900,7 @@ var s5= new sound("../Js/Ho Ho Ho St Nick-SoundBible.com-1954250969.mp3");
           console.log("colision");
           if(RunJeux)
             s2.on();
+          if(LutinBouge)
           argent-=5;
           if(argent<0)
               argent=0;
