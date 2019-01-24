@@ -14,9 +14,11 @@ window.onload=function () {
     var RunJeux=true;
 
     var cadeaux=100;
-    var argent=600;
+    var argent=100;
     var temps=0;
-    texture.src = "../Js/texture.jpg";
+    const textures=["texture","background3"]; // pour avoir des textures different.
+
+    texture.src = "../Js/"+textures[getRandomInt(2)]+".jpg";
     santaClause.src="../Js/santa.png";
     tree.src="../Js/tree.png";
     lutin.src="../Js/lutin.png";
@@ -47,7 +49,7 @@ window.onload=function () {
         [288, 213,68,77],
         [416, 191,63,94],[96,133,95,124],[0,259,95,127],[96,259,100,127]];
 
-var vitesseLutins=10;
+var vitesseLutins=30;
     function getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
     }
@@ -252,20 +254,10 @@ var vitesseLutins=10;
 
     }
 
-    // var sapin=new Sapin();
-    // var sapins=new Sapin[10];
-    // var sapins : Sapin[] = new Sapin[10];
 
-    // for (var i = 0; i < sapins.Length; i++) {
-    //    sapins[i] = new Sapin()
-    // } nous allons travallier avec 5 sapin
     var sapin1=new Sapin();
     sapin1.afficher=true;
     var sapin2=new Sapin();
-    var sapin3=new  Sapin();
-    var sapin4=new Sapin();
-    var sapin5=new Sapin();
-    var lutins=new Lutin();
     var listeDeLutins=[];
     AjoutLutin(sapin1);
 
@@ -406,7 +398,7 @@ var vitesseLutins=10;
                     if(this.intervalBetweenSantaX==bornSupSantaX)
                         this.intervalBetweenSantaX=0;
                     if(this.dxSanta<width-50) // On enleve 50 pour que Santa ne disparesse pas completement sur le bord
-                        this.dxSanta += 10;
+                        this.dxSanta += 3;
                     else
                         this.dxSanta=2;
                     break;
@@ -425,7 +417,7 @@ var vitesseLutins=10;
                     if(this.intervalBetweenSantaX==bornSupSantaX)
                         this.intervalBetweenSantaX=0;
                     if(this.dxSanta>2) // nous allons l'aisser deux pixel pour que Santa apparesse complettement
-                        this.dxSanta -= 10;
+                        this.dxSanta -= 3;
                     else
                         this.dxSanta=width-10;
                     break;
@@ -445,7 +437,7 @@ var vitesseLutins=10;
                     if(this.intervalBetweenSantaX==bornSupSantaX)
                         this.intervalBetweenSantaX=0;
                     if(this.dySanta<height-70) // meme chose on evite que Santa disparer du coup on enleve 60 de la hauteur
-                        this.dySanta+=10;
+                        this.dySanta+=3;
                     else
                         this.dySanta=2;
                     break;
@@ -465,7 +457,7 @@ var vitesseLutins=10;
                     if(this.intervalBetweenSantaX==bornSupSantaX)
                         this.intervalBetweenSantaX=0;
                     if(this.dySanta>-15)
-                        this.dySanta-=10;
+                        this.dySanta-=3;
                     else
                         this.dySanta=height+3;
                     break;
@@ -565,7 +557,6 @@ var vitesseLutins=10;
 
     var s3=new sound("../Js/footsteps_snow_4.mp3");
     function keyDownHandler(e) {
-
         s3.on();
         switch(e.keyCode)
         {
@@ -649,10 +640,9 @@ function drawBoule1() {
 
     function dessineLutins()
     {
-        // console.log("Nombre de lutin "+ listeDeLutins.length);
-        for (var i=0;listeDeLutins.length;i++)
+        for (let l of listeDeLutins)
         {
-            listeDeLutins[i].drawLutin();
+            l.drawLutin();
         }
 
     }
@@ -718,7 +708,7 @@ var s5= new sound("../Js/Ho Ho Ho St Nick-SoundBible.com-1954250969.mp3");
 
         if(RunJeux)
         temps=temps+10; // le temps en milliseconds
-        if(temps==190000)
+        if(temps===190000)
             vitesseLutins=vitesseLutins+20;// la vitesse augmente de 20
         ctx.clearRect(0, 0, canvas.width, canvas.height); // je commence par effacer l'ecran
 
@@ -770,6 +760,7 @@ var s5= new sound("../Js/Ho Ho Ho St Nick-SoundBible.com-1954250969.mp3");
         sapin1.draw();
         sapin2.draw();
         santa.draw();
+        dessineLutins();
         if(cadeaux<=0 || argent<=0)
         {
 
@@ -801,10 +792,6 @@ var s5= new sound("../Js/Ho Ho Ho St Nick-SoundBible.com-1954250969.mp3");
             s5.off();
         }
 
-       // lutins.drawLutin();
-        dessineLutins();
-        // sapin1.draw();
-        //   drawListeSapins();
     }
 
 
@@ -895,13 +882,26 @@ var s5= new sound("../Js/Ho Ho Ho St Nick-SoundBible.com-1954250969.mp3");
 
   function collisionLutin(lutin) {
 
-      if(santa.dxSanta > lutin.Vx-40 && santa.dxSanta < lutin.Vx+40 && santa.dySanta > lutin.Vy-47 && santa.dySanta < lutin.Vy+47)
+      if(santa.dxSanta > lutin.Vx-22 && santa.dxSanta < lutin.Vx+22 && santa.dySanta > lutin.Vy-30 && santa.dySanta < lutin.Vy+30)
       {
           console.log("colision");
           if(RunJeux)
             s2.on();
           if(LutinBouge)
-          argent-=5;
+          {
+              if(rightPressed)
+                  santa.dxSanta=santa.dxSanta+20;
+              else if(leftPressed)
+                  santa.dxSanta=santa.dxSanta-20;
+              else if(upPressed)
+                  santa.dySanta=santa.dySanta-20;
+              else if(downPressed)
+                  santa.dySanta=santa.dySanta+20;
+              else
+                  santa.dxSanta=santa.dxSanta+20;
+              argent-=5;
+          }
+
           if(argent<0)
               argent=0;
           return true;
@@ -909,9 +909,9 @@ var s5= new sound("../Js/Ho Ho Ho St Nick-SoundBible.com-1954250969.mp3");
           return false;
   }
   function collisionAllLutin() {
-      for (var i=0;listeDeLutins.length;i++)
+      for (let l of listeDeLutins)
       {
-         if (collisionLutin(listeDeLutins[i]))
+         if (collisionLutin(l))
              return true;
       }
       return false;
@@ -961,12 +961,21 @@ function atrapeBoule1() {
     function walkLutin()
     {
         if(LutinBouge && RunJeux)
-        for (var i=0;listeDeLutins.length;i++)
+        for (let l of listeDeLutins)
         {
-            listeDeLutins[i].marche();
+            l.marche();
 
         }
     }
+
+
+
+
+
+
+
+
+
     setInterval(draw, 10);
     setInterval( drawListeSapins,10000);
     setInterval(collisionAllLutin,10);
